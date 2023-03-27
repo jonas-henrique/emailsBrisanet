@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Pesquisar no select abaixo -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <!-- bootstrap abaixo -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
+    <title>Document</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    nav {
+        background-color: #333;
+        overflow: hidden;
+        width: 100%;
+
+    }
+
+    nav .logo {
+        color: white;
+        float: left;
+        font-size: 20px;
+        display: block;
+        padding: 14px 16px;
+    }
+
+    nav a {
+        color: white;
+        float: right;
+        text-decoration: none;
+        display: block;
+        padding: 14px 16px;
+    }
+
+    nav a:hover {
+        transition: 0, 5s;
+        background-color: #e4e4e4;
+        text-decoration: none;
+        color: #333;
+    }
+
+    select {
+        width: 60%;
+    }
+
+    button {
+        color: black;
+        text-decoration: none;
+        display: block;
+        padding: 14px 16px;
+    }
+
+    center {
+        padding: 2%;
+    }
+
+    button:hover {
+        color: white;
+        background-color: black;
+        text-decoration: none;
+        display: block;
+        padding: 14px 16px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('#callcenter').select2();
+        $('#motivo').select2();
+
+    });
+    function caixa() {
+        let callcenter = document.getElementById("callcenter").value;
+        let motivo = document.getElementById("motivo").value;
+        let copiado = "";
+        let aux;
+
+        let gestorPdf = "rodrigo.gurgel@grupobrisanet.com.br";
+        let gestorSede = "emanuel.rolim@grupobrisanet.com.br";
+
+        let lideresPdf = "joao.braz@grupobrisanet.com.br luana.luana@grupobrisanet.com.br matheus.pereira@grupobrisanet.com.br vinicios.costa@grupobrisanet.com.br";
+        let lideresSede = "euda.naelia@grupobrisanet.com.br juan.ferreira@grupobrisanet.com.br joao.nogueira@grupobrisanet.com.br";
+        let suporte = "suportereceptivo@grupobrisanet.com.br suportedigital@grupobrisanet.com.br";
+        if (callcenter == "PDF") {
+            if (motivo == "cancelamento") {
+                aux = "retencaoativo@grupobrisanet.com.br lideresretencao@grupobrisanet.com.br";
+                copiado = gestorPdf + " " + lideresPdf + " " + suporte + " " + aux;
+            }
+
+        } else if (callcenter == "PEREIRO") {
+            alert("Gestor: " + gestorSede + "\nLíderes: " + lideresSede);
+
+        } else {
+            alert("escolha algo");
+
+        }
+        if (copiado != "") {
+            document.getElementById("aq").innerHTML = "<center>Pessoas encontradas:<br /><textarea name='textooo' id='texto' cols='36' rows='10'></textarea><br /></center>";
+            document.getElementById("texto").innerHTML = copiado;
+            copiarbutton();
+        }
+
+    }
+
+    function copiarbutton() {
+        let textoCopiado = document.getElementById("texto");
+        textoCopiado.select();
+        textoCopiado.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        alert("copiado");
+        document.getElementById("texto").disabled = "true";
+    }
+</script>
+
+
+<body>
+    <nav>
+        <div class="logo"><b>BRISANET</b></div>
+        <a href="#">EMAILS INTERNOS</a>
+    </nav>
+
+    <div>
+        <center>
+            <b>Você é de qual call center?</b><br />
+            <select id="callcenter">
+                <option value=""></option>
+                <option value="PDF">PDF</option>
+                <option value="PEREIRO">PEREIRO</option>
+            </select>
+        </center>
+
+
+        <center>
+            <b>Agora escolha o problema:</b>
+            <br />
+            <select id="motivo">
+                <option value=""></option>
+                <option value="cancelamento">Solicitação cancelamento fora do expediente</option>
+                <option value="reparo">Cobrança de reparo fora do prazo</option><br />
+            </select><br /><br /><br />
+            <button type="submit" onclick="caixa()">Buscar pessoas e copiar </button><br />
+        </center>
+
+        <!-- <textarea name="textooo" id="texto" style="resize: none"></textarea> -->
+
+        <b id="aq"></b>
+    </div>
+
+</body>
+
+</html>
